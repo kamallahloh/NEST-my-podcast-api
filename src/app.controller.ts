@@ -1,7 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+// controllers to handle any incoming requests // the entry point //
+// create Controller using Nest CLI write >> nest generate controller episodes >>
+@Controller() // Class decorator 
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
