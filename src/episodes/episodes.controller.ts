@@ -19,9 +19,20 @@ import { ConfigService } from 'src/config/config.service';
 import { error } from 'console';
 import { IsPositivePipe } from 'src/pipes/is-positive.pipe';
 import { ApiKeyGuard } from 'src/guards/api-key.guard';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 // apply the Guard
 //@UseGuards(ApiKeyGuard) // here the guard is control the access to all routes in the episode path
+
+@ApiTags('episodes') // to group endpoint in swagger http://localhost:3000/api
 @Controller('episodes') // the root Path
 export class EpisodesController {
   // Dependency Injection
@@ -33,6 +44,19 @@ export class EpisodesController {
   ) {}
 
   @Get() // method decorator can accept arguments for nested root paths
+  @ApiOperation({ summary: 'Fetch a list of all episodes' })
+  @ApiResponse({
+    status: 200,
+    description: 'list of episodes fetched successfully',
+    type: CreateEpisodeDto,
+    isArray: true,
+  })
+  /*@ApiOkResponse({
+    description: 'list of episodes fetched successfully',
+  })*/
+  @ApiNotFoundResponse({
+    description: 'episodes not found',
+  })
   findAll(
     @Query('sort') /* arguments decorators */ sort: 'asc' | 'desc' = 'desc',
     @Query('limit', new DefaultValuePipe(100), ParseIntPipe, IsPositivePipe)
@@ -64,8 +88,17 @@ export class EpisodesController {
     return this.episodesService.findOne(id);
   }
 
-  @UseGuards(ApiKeyGuard) // here the guard is control the access to only the create handler 
+  @UseGuards(ApiKeyGuard) // here the guard is control the access to only the create handler
   @Post()
+  @ApiOperation({ summary: 'create a new episode' })
+  @ApiCreatedResponse({
+    description: 'created',
+    type: CreateEpisodeDto,
+    isArray: true,
+  })
+  @ApiBadRequestResponse({
+    description: 'Invalid data provided',
+  })
   //Create(@Body() input: any) {
   Create(@Body(ValidationPipe) input: CreateEpisodeDto) {
     console.log(input);
