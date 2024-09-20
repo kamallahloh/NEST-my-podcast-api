@@ -44,5 +44,3 @@ export class EpisodesController {
     return this.episodesService.create(input);
   }
 }
-
-//>>> REACHED HERE inject a service from another module
