@@ -21,6 +21,7 @@ import { IsPositivePipe } from 'src/pipes/is-positive.pipe';
 import { ApiKeyGuard } from 'src/guards/api-key.guard';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -29,9 +30,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+
 // apply the Guard
 //@UseGuards(ApiKeyGuard) // here the guard is control the access to all routes in the episode path
-
+@ApiBearerAuth()
 @ApiTags('episodes') // to group endpoint in swagger http://localhost:3000/api
 @Controller('episodes') // the root Path
 export class EpisodesController {
@@ -99,6 +101,9 @@ export class EpisodesController {
   @ApiBadRequestResponse({
     description: 'Invalid data provided',
   })
+
+  // validation error response
+
   //Create(@Body() input: any) {
   Create(@Body(ValidationPipe) input: CreateEpisodeDto) {
     console.log(input);

@@ -11,6 +11,7 @@ async function bootstrap() {
     .setTitle('Bookstore')
     .setDescription('API documentation')
     .setVersion('1.0.0')
+    .addBearerAuth()
     .build();
 
   // create the swagger doc.
