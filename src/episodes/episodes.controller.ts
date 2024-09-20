@@ -15,6 +15,7 @@ import { EpisodesService } from './episodes.service';
 import { CreateEpisodeDto } from './dto/create-episode.dto';
 import { ConfigService } from 'src/config/config.service';
 import { error } from 'console';
+import { IsPositivePipe } from 'src/is-positive/is-positive.pipe';
 
 @Controller('episodes') // the root Path
 export class EpisodesController {
@@ -29,7 +30,8 @@ export class EpisodesController {
   @Get() // method decorator can accept arguments for nested root paths
   findAll(
     @Query('sort') /* arguments decorators */ sort: 'asc' | 'desc' = 'desc',
-    @Query('limit', new DefaultValuePipe(100), ParseIntPipe) limit: number,
+    @Query('limit', new DefaultValuePipe(100), ParseIntPipe, IsPositivePipe)
+    limit: number,
     // Search for Built-in Pipes in Nest.js
     // ParseIntPipe validate if the query parameter is present .
     // new DefaultValuePipe(100) is validate if it's a valid integer.
