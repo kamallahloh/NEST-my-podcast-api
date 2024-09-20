@@ -10,6 +10,7 @@ import {
   ParseIntPipe,
   Post,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { EpisodesService } from './episodes.service';
@@ -17,7 +18,10 @@ import { CreateEpisodeDto } from './dto/create-episode.dto';
 import { ConfigService } from 'src/config/config.service';
 import { error } from 'console';
 import { IsPositivePipe } from 'src/pipes/is-positive.pipe';
+import { ApiKeyGuard } from 'src/guards/api-key.guard';
 
+// apply the Guard
+//@UseGuards(ApiKeyGuard) // here the guard is control the access to all routes in the episode path
 @Controller('episodes') // the root Path
 export class EpisodesController {
   // Dependency Injection
@@ -60,6 +64,7 @@ export class EpisodesController {
     return this.episodesService.findOne(id);
   }
 
+  @UseGuards(ApiKeyGuard) // here the guard is control the access to only the create handler 
   @Post()
   //Create(@Body() input: any) {
   Create(@Body(ValidationPipe) input: CreateEpisodeDto) {
