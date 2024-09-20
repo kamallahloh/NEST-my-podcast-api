@@ -1,11 +1,13 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Get,
   HttpException,
   HttpStatus,
   NotFoundException,
   Param,
+  ParseIntPipe,
   Post,
   Query,
 } from '@nestjs/common';
@@ -27,6 +29,10 @@ export class EpisodesController {
   @Get() // method decorator can accept arguments for nested root paths
   findAll(
     @Query('sort') /* arguments decorators */ sort: 'asc' | 'desc' = 'desc',
+    @Query('limit', new DefaultValuePipe(100), ParseIntPipe) limit: number,
+    // Search for Built-in Pipes in Nest.js
+    // ParseIntPipe validate if the query parameter is present .
+    // new DefaultValuePipe(100) is validate if it's a valid integer.
   ) {
     //return 'all episodes';
     return this.episodesService.findAll(sort);
@@ -46,7 +52,6 @@ export class EpisodesController {
     if (!episode) {
       //throw new HttpException('Episode not found', HttpStatus.NOT_FOUND);
       throw new NotFoundException('Episode not found');
-
     }
     //return 'one episode';
     return this.episodesService.findOne(id);
