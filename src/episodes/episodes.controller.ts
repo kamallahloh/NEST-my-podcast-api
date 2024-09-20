@@ -16,7 +16,7 @@ import { EpisodesService } from './episodes.service';
 import { CreateEpisodeDto } from './dto/create-episode.dto';
 import { ConfigService } from 'src/config/config.service';
 import { error } from 'console';
-import { IsPositivePipe } from 'src/is-positive/is-positive.pipe';
+import { IsPositivePipe } from 'src/pipes/is-positive.pipe';
 
 @Controller('episodes') // the root Path
 export class EpisodesController {
