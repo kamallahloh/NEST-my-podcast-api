@@ -5,7 +5,7 @@ import { Episode } from './entity/episode.entity';
 import { CreateEpisodeDto } from './dto/create-episode.dto';
 
 // Providers where nearly every thing in Nest.js is a Provider with injectable decorator into other classes
-// create Provider (Service) using Nest CLI write >> nest generate service episodes >>
+// create Provider (Service) using Nest CLI write >> nest generate service episodes >> nest g s config
 
 // Wrong implementation
 //type Episode = { id: string; name: string; featured: boolean };

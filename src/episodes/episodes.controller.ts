@@ -1,13 +1,17 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { EpisodesService } from './episodes.service';
 import { CreateEpisodeDto } from './dto/create-episode.dto';
+import { ConfigService } from 'src/config/config.service';
 
 @Controller('episodes') // the root Path
 export class EpisodesController {
   // Dependency Injection
   // to inject a service into the controller we use the constructor /// where Nest.js will create an instance of the service and inject it.
 
-  constructor(private episodesService: EpisodesService) {}
+  constructor(
+    private episodesService: EpisodesService,
+    private configServices: ConfigService,
+  ) {}
 
   @Get() // method decorator can accept arguments for nested root paths
   findAll(
@@ -40,6 +44,5 @@ export class EpisodesController {
     return this.episodesService.create(input);
   }
 }
-
 
 //>>> REACHED HERE inject a service from another module
